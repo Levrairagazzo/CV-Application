@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import './App.css';
+import {Component} from 'react';
+import {Education} from './components/Education.js';
+import Header from './components/Header';
+import GenInfo from './components/GenInfo';
+import Experience from './components/Experience';
+import Horizontal from './components/Horizontal';
+
+
+
+class App extends Component {
+
+
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems:'center',
+          height: '15vh',
+          backgroundColor:'pink',
+
+        }}>
+        <Header/>
+      </div>
+      <Horizontal title='General Information'/>
+       <form>
+      <GenInfo/>
+      {/* <Horizontal title='Experience'/>
+      <Experience/>
+      <Horizontal title='Education'/>
+      <Education/> */}
+      <input type='submit' value="Submit form"></input>
+      </form>
+
+      <div id='output'>
+
+      </div>
+      
     </div>
   );
+  }
 }
 
 export default App;
