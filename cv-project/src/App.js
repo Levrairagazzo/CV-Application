@@ -27,18 +27,15 @@ class App extends Component {
         <Header/>
       </div>
       <Horizontal title='General Information'/>
-       <form>
+      
       <GenInfo/>
-      {/* <Horizontal title='Experience'/>
+      <Horizontal title='Experience'/>
       <Experience/>
       <Horizontal title='Education'/>
-      <Education/> */}
-      <input type='submit' value="Submit form"></input>
-      </form>
+      <Education/>
 
-      <div id='output'>
 
-      </div>
+      
       
     </div>
   );
