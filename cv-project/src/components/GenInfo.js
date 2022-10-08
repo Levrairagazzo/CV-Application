@@ -1,3 +1,4 @@
+import { differenceInBusinessDays } from 'date-fns'
 import React, { Component } from 'react'
 
 export class genInfo extends Component {
@@ -5,6 +6,7 @@ export class genInfo extends Component {
     super(props)
   
     this.state = {
+      visible: true,
        firstName: '',
        lastName: '',
        email: '',
@@ -38,6 +40,7 @@ export class genInfo extends Component {
 	}
 
   handleSubmit = (event) => {
+    this.handleVisibility(event);
 		let firstName = `${this.state.firstName}`;
     let lastName = `${this.state.lastName}`;
     let email = `${this.state.email}`;
@@ -52,11 +55,22 @@ export class genInfo extends Component {
 		event.preventDefault()
 	}
 
+  handleVisibility = event => {
+    let updateVisible = true;
+    if(this.state.visible)updateVisible = false;
+
+    this.setState({
+		visible: updateVisible
+		})
+  } 
+
 
 
   render() {
     return (
       <div id='generalInfoWrapper'>
+        {this.state.visible ? null: <button onClick={this.handleVisibility}>Change info</button>}
+        {this.state.visible ?
         <form onSubmit={this.handleSubmit}>
             <div className='newInput'>
                 <div className='inputContainer'>
@@ -75,9 +89,10 @@ export class genInfo extends Component {
                   <label>Location:</label>
                   <input type="text" placeholder='Fresno, CA' value={this.state.location} id='location' onChange={this.handleLocationChange}></input>
                 </div>
-                <button type="submit" >Update</button>
+                <button type="submit" >Save changes</button>
             </div>
         </form>
+        : null}
 
         <div id='output'>
        <p>First name: </p>

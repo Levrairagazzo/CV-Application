@@ -1,27 +1,41 @@
 import React, { Component } from 'react'
+import ExperienceOutput from './ExperienceOutput'
+import shortid from "shortid";
 
 export class Experience extends Component {
   constructor(props) {
     super(props)
+    
   
     this.state = {
        title: '',
-       company: ''
+       company: '',
+       experiences :[]
     }
+
   }
 
   handleSubmit = (event) => {
-		let title = `${this.state.title}`;
-    let company = `${this.state.company}`;
+		let jobTitle = `${this.state.title}`;
+    let companyName = `${this.state.company}`;
+    let copyarr = this.state.experiences;
+    let newId = shortid.generate();
+    copyarr.push({ id: newId,
+                              title: jobTitle,
+                              company:companyName});
+    console.log(copyarr)
     
-    let recap = document.getElementById('outputExperience');
-    recap.innerHTML += ` <div>
-                        <p>Title: ${title} </p>
-                        <p>Company: ${company} </p>
-                        </div>`;
+    this.setState(prev => ({
+      exeperiences: copyarr
+    }));
+      
+                    
 		event.preventDefault()
 	}
 
+  test = (event) => {
+    console.log("This is a test");
+  }
   handleTitleChange = event => {
 		this.setState({
 			title: event.target.value
@@ -32,6 +46,17 @@ export class Experience extends Component {
 			company: event.target.value
 		})
 	}
+
+  onRemoveExperience = item => {
+    let copyArr = this.state.experiences;
+    console.log(copyArr)
+    let result = copyArr.filter((element) => element.id !== item.id);
+    this.setState({
+      experiences: result
+    })
+  };
+
+
 
   
   render() {
@@ -47,16 +72,25 @@ export class Experience extends Component {
       <input type='text'  value={this.state.company} onChange={this.handleCompanyChange}></input>
       </div>
       <div >
-      <button type='submit'>Add Experience</button>
+      <button type='submit' >Add Experience</button>
       </div>
       </form>
       <div id='outputExperience'>
+        {
+          this.state.experiences.map(experience => (<ExperienceOutput 
+            title={experience.title}
+            company={experience.company}
+            key={experience.id}
+            remove={this.onRemoveExperience}
+            exp = {experience}
+            />))
+        }
         
       </div>
       
     </div>
     )
-  }
+      }
 }
 
 export default Experience

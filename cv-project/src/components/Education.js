@@ -1,4 +1,7 @@
 import {Component} from 'react';
+import shortid from 'shortid';
+import EducationOutput from './EducationOutput'
+import Experience from './Experience';
 
 class Education extends Component {
   constructor(props) {
@@ -7,21 +10,28 @@ class Education extends Component {
     this.state = {
        institution: '',
        major:'',
-       gpa:''
+       gpa:'',
+       educations: []
     }
   }
 
   handleSubmit = (event) => {
-		let institution = `${this.state.institution}`;
-    let major = `${this.state.major}`;
-    let gpa = `${this.state.gpa}`;
-    
-    let recap = document.getElementById('outputEducation');
-    recap.innerHTML += `<div>
-                        <p>Institution: ${institution} </p>
-                        <p>Major: ${major} </p>
-                        <p>Major: ${gpa} </p>
-                        </div>`;
+		let newInstitution = `${this.state.institution}`;
+    let newMajor = `${this.state.major}`;
+    let newGpa = `${this.state.gpa}`;
+    let copyarr = this.state.educations;
+    let newId = shortid.generate();
+
+    copyarr.push({id:newId,
+      institution:newInstitution,
+      major:newMajor,
+      gpa:newGpa
+
+    })
+    this.setState(prev => ({
+      exeperiences: copyarr
+    }));
+   
 		event.preventDefault()
 	}
 
@@ -42,6 +52,15 @@ class Education extends Component {
 			major: event.target.value
 		})
   }
+
+  onRemoveEducation = item => {
+    console.log(result)
+    let copyArr = this.state.educations;
+    let result = copyArr.filter((element) => element.id !== item.id);
+    this.setState({
+      education: result
+    })
+  };
 
 
     render() {
@@ -66,6 +85,16 @@ class Education extends Component {
           </form>
 
           <div id='outputEducation'>
+            {
+              this.state.educations.map(education => (<EducationOutput
+              institution={education.institution}
+              major={education.major}
+              gpa={education.gpa}
+              remove={this.onRemoveEducation}
+              educ = {education}
+              key = {education.id}
+              />))
+            }
           </div>
           
 
@@ -75,3 +104,4 @@ class Education extends Component {
 }
 
 export {Education};
+
