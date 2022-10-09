@@ -54,11 +54,13 @@ class Education extends Component {
   }
 
   onRemoveEducation = item => {
-    console.log(result)
+    console.log(item)
     let copyArr = this.state.educations;
+    console.log(copyArr)
     let result = copyArr.filter((element) => element.id !== item.id);
+    console.log(result)
     this.setState({
-      education: result
+      educations: result
     })
   };
 
